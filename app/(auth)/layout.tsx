@@ -8,21 +8,21 @@ import "../globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Threads",
-	description: "Create post aand share a thread in thread application",
+  title: "Threads",
+  description: "Create post aand share a thread in thread application",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<ClerkProvider
-		>
-			<html lang='en'>
-				<body className={`${inter.className} bg-dark-1`}>{children}</body>
-			</html>
-		</ClerkProvider>
-	);
+  return (
+    <ClerkProvider
+    >
+      <html lang='en'>
+        <body className={`${inter.className} bg-dark-1`}>{children}</body>
+      </html>
+    </ClerkProvider>
+  );
 }
