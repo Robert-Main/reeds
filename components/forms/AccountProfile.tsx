@@ -21,8 +21,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { isBase64Image } from "@/lib/utils";
 import { UserValidation } from "@/lib/validations/account.schema";
-import { updateUser } from "@/lib/actions/user.actoins";
-
+import { updateUser } from "@/lib/actions/user.actions";
+import { useUploadThing } from "@/lib/uploadthing";
 
 interface Props {
   user: {
@@ -35,8 +35,6 @@ interface Props {
   };
   btnTitle: string;
 }
-
-
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
   const router = useRouter();
@@ -65,7 +63,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       if (imgRes && imgRes[0].fileUrl) {
         values.profile_photo = imgRes[0].fileUrl;
       }
-
     }
 
     await updateUser({
@@ -110,41 +107,43 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col justify-start gap-10'
+        className="flex flex-col justify-start gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
-          name='profile_photo'
+          name="profile_photo"
           render={({ field }) => (
-            <FormItem className='flex items-center gap-4'>
-              <FormLabel className='account-form_image-label'>
+            <FormItem className="flex items-center gap-4">
+              <FormLabel className="account-form_image-label">
                 {field.value ? (
                   <Image
                     src={field.value}
-                    alt='profile_icon'
+                    alt="profile_icon"
                     width={96}
                     height={96}
                     priority
-                    className='object-contain rounded-full'
+                    className="object-contain rounded-full"
                   />
                 ) : (
                   <Image
-                    src='/assets/profile.svg'
-                    alt='profile_icon'
+                    src="/assets/profile.svg"
+                    alt="profile_icon"
                     width={24}
                     height={24}
-                    className='object-contain'
+                    className="object-contain"
                   />
                 )}
               </FormLabel>
-              <FormControl className='flex-1 text-gray-200 text-base-semibold'>
+              <FormControl className="flex-1 text-gray-200 text-base-semibold">
                 <Input
-                  type='file'
-                  accept='image/*'
-                  placeholder='Add profile photo'
-                  className='account-form_image-input'
-                  onChange={(e) => handleImage(e, field.onChange)}
+                  type="file"
+                  accept="image/*"
+                  placeholder="Add profile photo"
+                  className="account-form_image-input"
+                  onChange={(e) =>
+                    handleImage(e, field.onChange)
+                  }
                 />
               </FormControl>
             </FormItem>
@@ -153,16 +152,16 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
 
         <FormField
           control={form.control}
-          name='name'
+          name="name"
           render={({ field }) => (
-            <FormItem className='flex flex-col w-full gap-3'>
-              <FormLabel className='text-base-semibold text-light-2'>
+            <FormItem className="flex flex-col w-full gap-3">
+              <FormLabel className="text-base-semibold text-light-2">
                 Name
               </FormLabel>
               <FormControl>
                 <Input
-                  type='text'
-                  className='account-form_input no-focus'
+                  type="text"
+                  className="account-form_input no-focus"
                   {...field}
                 />
               </FormControl>
@@ -173,16 +172,16 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
 
         <FormField
           control={form.control}
-          name='username'
+          name="username"
           render={({ field }) => (
-            <FormItem className='flex flex-col w-full gap-3'>
-              <FormLabel className='text-base-semibold text-light-2'>
+            <FormItem className="flex flex-col w-full gap-3">
+              <FormLabel className="text-base-semibold text-light-2">
                 Username
               </FormLabel>
               <FormControl>
                 <Input
-                  type='text'
-                  className='account-form_input no-focus'
+                  type="text"
+                  className="account-form_input no-focus"
                   {...field}
                 />
               </FormControl>
@@ -193,16 +192,16 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
 
         <FormField
           control={form.control}
-          name='bio'
+          name="bio"
           render={({ field }) => (
-            <FormItem className='flex flex-col w-full gap-3'>
-              <FormLabel className='text-base-semibold text-light-2'>
+            <FormItem className="flex flex-col w-full gap-3">
+              <FormLabel className="text-base-semibold text-light-2">
                 Bio
               </FormLabel>
               <FormControl>
                 <Textarea
                   rows={10}
-                  className='account-form_input no-focus'
+                  className="account-form_input no-focus"
                   {...field}
                 />
               </FormControl>
@@ -211,7 +210,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
-        <Button type='submit' className='bg-primary-500'>
+        <Button type="submit" className="bg-primary-500">
           {btnTitle}
         </Button>
       </form>
@@ -220,7 +219,3 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
 };
 
 export default AccountProfile;
-
-function useUploadThing(arg0: string): { startUpload: any; } {
-  throw new Error("Function not implemented.");
-}

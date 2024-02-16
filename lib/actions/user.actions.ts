@@ -3,9 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../mongoose";
 import { model } from "mongoose";
-import User from "../models/user.models";
+import User from "../models/user.model";
 
-interface Props {
+interface Params {
 	userId: string;
 	username: string;
 	name: string;
@@ -21,7 +21,7 @@ export async function updateUser({
 	path,
 	username,
 	image,
-}: Props): Promise<void> {
+}: Params): Promise<void> {
 	try {
 		connectToDB();
 
@@ -46,10 +46,6 @@ export async function updateUser({
 }
 
 export async function fetchUser(userId: string) {
-	if (!userId) {
-		throw new Error("User ID is missing or undefined");
-	}
-
 	try {
 		connectToDB();
 
@@ -61,6 +57,7 @@ export async function fetchUser(userId: string) {
 
 		return user;
 	} catch (error: any) {
+		console.error(error); // Log the error stack trace for debugging
 		throw new Error(`Failed to fetch user: ${error.message}`);
 	}
 }
