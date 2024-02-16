@@ -49,15 +49,13 @@ export async function fetchUser(userId: string) {
 	try {
 		connectToDB();
 
-		const user = await User.findOne({ id: userId });
-
-		if (!user) {
-			throw new Error(`User with ID ${userId} not found`);
-		}
-
-		return user;
+		return await User.findOne({ id: userId });
+		console.log(User);
+		// .populate({
+		// path: "communities",
+		// model: Community,
+		// });
 	} catch (error: any) {
-		console.error(error); // Log the error stack trace for debugging
 		throw new Error(`Failed to fetch user: ${error.message}`);
 	}
 }
